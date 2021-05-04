@@ -11,6 +11,9 @@ Prévenir en temps réel les chauffeurs lorsque des routes sont congestionnées,
 # Technologies
 ***
 * [Api RenneMetropole](https://data.rennesmetropole.fr/explore/dataset/etat-du-trafic-en-temps-reel/information/)
+* Python
 * Elasticsearch
 * Kibana
-* Logstash
+
+# Installation
+***
