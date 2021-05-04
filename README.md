@@ -24,4 +24,4 @@ Prévenir en temps réel les chauffeurs lorsque des routes sont congestionnées,
 1. Démarrer le cluster Elasticsearch
 2. Lancer le script python `fetch_transport_rennes.py`
 
-[![forthebadge](https://forthebadge.com/images/badges/powered-by-coders-sweat.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-coders-sweat.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
