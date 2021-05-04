@@ -4,9 +4,11 @@ import elasticsearch
 
 # Configuration Elastic
 config = {
-    'host': 'http://localhost:9200'
+    'host': 'localhost',
+    'port': 9200
 }
 es = elasticsearch.Elasticsearch([config], timeout=300)
+print(es)
 
 
 # URL de l'API Rennes Metropole
@@ -16,7 +18,7 @@ rows = 10
 # Hôte Elastic
 elastic_host = "http://localhost:9200"
 # Index
-index = "/transport_rennes_test"
+index = "transport_rennes_test_4"
 
 
 # Récupération des données au format JSON
@@ -34,10 +36,7 @@ for data in content["records"]:
 # requests.put(elastic_host+index)
 es.indices.create(index=index)
 
-# Prépation
-
-
 # Stockage des données sur Elastic
 for i, data in enumerate(confident_data):
-    # PUT http://localhost:9200/transport_rennes_test/NUMERO_DE_LA_DONNEE + données JSON
-    requests.put(elastic_host+index+"/{i}", data=data)
+    res = es.index(index=index, doc_type="transport_info", id=i, body=data)
+    print(res["created"])
