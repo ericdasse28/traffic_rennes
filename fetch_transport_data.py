@@ -1,4 +1,13 @@
 import requests
+import elasticsearch
+
+
+# Configuration Elastic
+config = {
+    'host': 'http://localhost:9200'
+}
+es = elasticsearch.Elasticsearch([config], timeout=300)
+
 
 # URL de l'API Rennes Metropole
 url = "https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=etat-du-trafic-en-temps-reel&q=&facet=denomination"
@@ -21,8 +30,14 @@ for data in content["records"]:
         confident_data.append(data)
 
 # Création d'un index Elastic
-requests.put(elastic_host+index)
+# PUT http:localhost:9200/transport_rennes_test
+# requests.put(elastic_host+index)
+es.indices.create(index=index)
+
+# Prépation
+
 
 # Stockage des données sur Elastic
 for i, data in enumerate(confident_data):
+    # PUT http://localhost:9200/transport_rennes_test/NUMERO_DE_LA_DONNEE + données JSON
     requests.put(elastic_host+index+"/{i}", data=data)
