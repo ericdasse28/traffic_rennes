@@ -18,5 +18,10 @@ Prévenir en temps réel les chauffeurs lorsque des routes sont congestionnées,
 # Installation
 ***
 
+# Utilisation
+***
+## Import des données depuis l'API de la métropole de Rennes
+1. Démarrer le cluster Elasticsearch
+2. Lancer le script python `fetch_transport_rennes.py`
 
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-coders-sweat.svg)](https://forthebadge.com)
