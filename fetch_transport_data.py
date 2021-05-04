@@ -1,5 +1,6 @@
 import requests
 import elasticsearch
+import json
 
 
 # Configuration Elastic
@@ -14,11 +15,11 @@ print(es)
 # URL de l'API Rennes Metropole
 url = "https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=etat-du-trafic-en-temps-reel&q=&facet=denomination"
 # Nombre de lignes de données à récupérer
-rows = 10
+rows = 1000
 # Hôte Elastic
 elastic_host = "http://localhost:9200"
 # Index
-index = "transport_rennes_test_4"
+index = "transport_rennes_test_8"
 
 
 # Récupération des données au format JSON
@@ -29,6 +30,7 @@ content = response.json()
 confident_data = []
 for data in content["records"]:
     if data["fields"]["traveltimereliability"] >= 50:
+        print(type(data))
         confident_data.append(data)
 
 # Création d'un index Elastic
@@ -38,5 +40,5 @@ es.indices.create(index=index)
 
 # Stockage des données sur Elastic
 for i, data in enumerate(confident_data):
-    res = es.index(index=index, doc_type="transport_info", id=i, body=data)
-    print(res["created"])
+    print("Indexation donnée "+i)
+    es.index(index=index, id=i, body=json.dumps(data))
