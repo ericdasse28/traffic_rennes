@@ -19,7 +19,7 @@ rows = 1000
 # Hôte Elastic
 elastic_host = "http://localhost:9200"
 # Index
-index = "transport_rennes_test"
+index = "transport_rennes_test_10"
 
 
 # Récupération des données au format JSON
@@ -33,12 +33,134 @@ for data in content["records"]:
         print(type(data))
         confident_data.append(data)
 
+# Définition de mapping
+mapping = {
+    "settings": {
+        "number_of_shards": 2,
+        "number_of_replicas": 1
+    },
+    
+    "mappings": {
+        "properties": {
+            "datasetid": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                    }
+                }
+            },
+            "fields" : {
+                "properties" : {
+                    "averagevehiclespeed" : {
+                        "type" : "long"
+                    },
+                    "datetime" : {
+                        "type" : "date"
+                    },
+                    "denomination" : {
+                        "type" : "text",
+                        "fields" : {
+                           "keyword" : {
+                                "type" : "keyword",
+                                "ignore_above" : 256
+                            }   
+                        }
+                    },
+                    "func_class" : {
+                        "type" : "long"
+                    },
+                    "geo_point_2d" : {
+                        "type" : "geo_point"
+                    },
+                    "geo_shape" : {
+                        "properties" : {
+                            "coordinates" : {
+                                "type" : "geo_shape"
+                            },
+                            "type" : {
+                                "type" : "text",
+                                "fields" : {
+                                    "keyword" : {
+                                        "type" : "keyword",
+                                        "ignore_above" : 256
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "id" : {
+                        "type" : "long"
+                    },
+                    "predefinedlocationreference" : {
+                        "type" : "text",
+                        "fields" : {
+                            "keyword" : {
+                                "type" : "keyword",
+                                "ignore_above" : 256
+                            }
+                        }
+                    },
+                    "trafficstatus" : {
+                        "type" : "text",
+                        "fields" : {
+                            "keyword" : {
+                                "type" : "keyword",
+                                "ignore_above" : 256
+                            }
+                        }
+                    },
+                    "traveltime" : {
+                        "type" : "long"
+                    },
+                    "traveltimereliability" : {
+                        "type" : "long"
+                    }
+                }
+            },
+            "geometry" : {
+                "properties" : {
+                    "coordinates" : {
+                        "type" : "float"
+                    },
+                    "type" : {
+                        "type" : "text",
+                        "fields" : {
+                            "keyword" : {
+                                "type" : "keyword",
+                                "ignore_above" : 256
+                            }
+                        }
+                    }
+                }
+            },   
+            "record_timestamp": {
+                "type": "date"
+            },
+            "recordid": {
+                "type": "text",
+                "fields": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                }
+            }
+
+        }
+    }
+}
+
+
+
 # Création d'un index Elastic
 # PUT http:localhost:9200/transport_rennes_test
 # requests.put(elastic_host+index)
-es.indices.create(index=index)
+es.indices.create(index=index,
+                  body=mapping,
+                  ignore=400  # Ignore 400 already exists
+                  )
 
 # Stockage des données sur Elastic
 for i, data in enumerate(confident_data):
-    print("Indexation donnée "+i)
+    print("Indexation donnée {}".format(i))
     es.index(index=index, id=i, body=json.dumps(data))
