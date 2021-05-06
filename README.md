@@ -29,3 +29,5 @@ Prévenir en temps réel les chauffeurs lorsque des routes sont congestionnées,
 
 ## Le lien vers le fichier DAT
 https://docs.google.com/document/d/15LaNyy-VfNivEQysPXG3RI-9vOvYBb-C3e1MoolBjK4/edit#
+## Le lien vers la présentation.ppt
+https://docs.google.com/presentation/d/177oFHTyRDqZ--cDG4P8u9CEZRYxcJAoiv-SfBEs1Ga8/edit?pli=1#slide=id.gd3e68917f6_3_18
