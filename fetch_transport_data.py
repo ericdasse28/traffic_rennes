@@ -18,7 +18,7 @@ rows = 1000
 # Hôte Elastic
 elastic_host = "http://localhost:9200"
 # Index
-index = "transport_rennes_test_15"
+index = "transport_rennes"
 
 es.indices.delete(index=index)
 
@@ -30,18 +30,16 @@ content = response.json()
 # Définition de mapping
 mapping = {
     "mappings": {
-        # "properties": {
-        #     "fields": {
-                "properties": {
-                    "geo_point_2d": {
-                        "type": "geo_point"
-                    },
+        "properties": {
+            "geo_point_2d": {
+                "type": "geo_point"
+            },
 
-                    "geo_shape": {
-                        "type": "geo_shape"
-                    }
-                }
+            "geo_shape": {
+                "type": "geo_shape"
             }
+        }
+    }
 }
 
 
