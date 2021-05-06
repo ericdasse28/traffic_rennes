@@ -1,6 +1,5 @@
-import requests
 import elasticsearch
-import json
+import requests
 
 
 # Configuration Elastic
@@ -66,7 +65,11 @@ for data in content["records"]:
     if data["fields"]["traveltimereliability"] >= 50:
         # print(type(data))
         # confident_data.append(data)
-        es.index(index=index, body=data["fields"])
+        if "geo_point_2d" in data["fields"].keys():
+            print("Former:", data["fields"]["geo_point_2d"])
+            data["fields"]["geo_point_2d"].reverse()
+            print("Now:", data["fields"]["geo_point_2d"])
+            es.index(index=index, body=data["fields"])
 
 # Stockage des données sur Elastic
 # for i, data in enumerate(confident_data):
