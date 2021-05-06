@@ -153,6 +153,12 @@ es.indices.create(index=index,
                   ignore=400  # Ignore 400 already exists
                   )
 
+# Add mapping to the index
+es.indices.put_mapping(
+    index=index,
+    body=mapping
+)
+
 # Stockage des données sur Elastic
 for i, data in enumerate(confident_data):
     print("Indexation donnée {}".format(i))
