@@ -19,7 +19,7 @@ rows = 1000
 # Hôte Elastic
 elastic_host = "http://localhost:9200"
 # Index
-index = "transport_rennes_test_12"
+index = "transport_rennes_test_13"
 
 
 # Récupération des données au format JSON
@@ -102,9 +102,6 @@ mapping = {
         }
     }
 }
-
-
-
 
 
 # Création d'un index Elastic
